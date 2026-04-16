@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WowoClean</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<h1>WowoClean - Container</h1>
+
+<h3>Total Muatan: <span id="totalWeight">0</span> kg</h3>
+
+<h2>Tambah Container</h2>
+<form id="containerForm">
+  <input type="text" id="container_id" placeholder="Container ID"><br>
+  <small id="error_container_id"></small><br>
+
+  <input type="text" id="waste_type" placeholder="Waste Type"><br>
+  <small id="error_waste_type"></small><br>
+
+  <input type="number" id="weight_kg" placeholder="Weight (kg)"><br>
+  <small id="error_weight_kg"></small><br>
+
+  <button type="submit">Tambah</button>
+</form>
+
+<h2>Data Container</h2>
+<div id="containerList"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
