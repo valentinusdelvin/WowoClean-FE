@@ -1,34 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
   <meta charset="UTF-8">
-  <title>WowoClean</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WowoClean - Dashboard Kontainer Limbah</title>
+  <meta name="description" content="Dashboard monitoring dan manajemen kontainer limbah WowoClean dengan keamanan JWT.">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
 
-<h1>WowoClean - Container</h1>
+  <!-- ================= LOGIN VIEW ================= -->
+  <div id="loginView" class="view-container">
+    <h1>WowoClean</h1>
+    <p class="sub-title">Silakan masuk untuk mengakses sistem gateway</p>
 
-<h3>Total Muatan: <span id="totalWeight">0</span> kg</h3>
+    <div id="loginAlert" class="alert-general hidden"></div>
 
-<h2>Tambah Container</h2>
-<form id="containerForm">
-  <input type="text" id="container_id" placeholder="Container ID"><br>
-  <small id="error_container_id"></small><br>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Alamat Email</label>
+        <input type="email" id="loginEmail" placeholder="nama@wowoclean.com" required autocomplete="username">
+        <span id="error_loginEmail" class="error-msg"></span>
+      </div>
 
-  <input type="text" id="waste_type" placeholder="Waste Type"><br>
-  <small id="error_waste_type"></small><br>
+      <div class="form-group">
+        <label for="loginPassword">Kata Sandi</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+        <span id="error_loginPassword" class="error-msg"></span>
+      </div>
 
-  <input type="number" id="weight_kg" placeholder="Weight (kg)"><br>
-  <small id="error_weight_kg"></small><br>
+      <button type="submit" class="btn-primary">Masuk ke Dashboard</button>
+    </form>
 
-  <button type="submit">Tambah</button>
-</form>
+    <div class="demo-accounts">
+      <h4>Akun Demo Evaluasi</h4>
+      <div class="demo-buttons">
+        <button type="button" class="btn-demo" id="btnDemoAdmin">Login Admin</button>
+        <button type="button" class="btn-demo" id="btnDemoOperator">Login Operator</button>
+      </div>
+    </div>
+  </div>
 
-<h2>Data Container</h2>
-<div id="containerList"></div>
+  <!-- ================= DASHBOARD VIEW ================= -->
+  <div id="dashboardView" class="view-container hidden">
+    <!-- User Profile Bar -->
+    <header class="dashboard-header">
+      <div class="user-info">
+        <span class="user-name" id="profileName">Loading User...</span>
+        <span class="user-role-badge" id="profileRole">Role</span>
+      </div>
+      <button type="button" class="btn-logout" id="btnLogout">Keluar</button>
+    </header>
 
-<script src="app.js"></script>
+    <h1>WowoClean Gateway</h1>
+    <p class="sub-title">Pemantauan & Manajemen Kontainer Limbah</p>
+
+    <!-- Total Muatan Stats -->
+    <section class="stats-card">
+      <span>Total Muatan Aktif</span>
+      <h3><span id="totalWeight">0</span> kg</h3>
+    </section>
+
+    <!-- Operator Read-Only Notice -->
+    <div id="operatorNotice" class="operator-notice hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <span>Anda masuk sebagai <strong>Operator</strong> (Akses Baca Saja). Form penambahan dan tombol aksi
+        dinonaktifkan.</span>
+    </div>
+
+    <!-- Admin Form: Tambah Container -->
+    <div id="adminFormSection">
+      <h2>Tambah Container Baru</h2>
+      <form id="containerForm">
+        <div class="form-group">
+          <label for="container_id">ID Kontainer (Format: LLNNNNN, misal: AB12345)</label>
+          <input type="text" id="container_id" placeholder="Contoh: AB12345">
+          <span id="error_container_id" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="waste_type">Tipe Limbah (General / Chemical)</label>
+          <input type="text" id="waste_type" placeholder="Contoh: General">
+          <span id="error_waste_type" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="weight_kg">Berat Muatan (kg)</label>
+          <input type="number" id="weight_kg" placeholder="Contoh: 500">
+          <span id="error_weight_kg" class="error-msg"></span>
+        </div>
+
+        <button type="submit" class="btn-primary">Tambah Kontainer</button>
+      </form>
+    </div>
+
+    <!-- Data Containers -->
+    <h2>Daftar Kontainer Aktif</h2>
+    <div class="container-list-wrapper">
+      <div id="containerList"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
+
 </html>
